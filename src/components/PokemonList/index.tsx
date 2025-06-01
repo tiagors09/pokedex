@@ -1,11 +1,12 @@
-import type { Pokemon } from "./types"
-import PokemonListItem from "./PokemonListtem"
+import type { Pokemon } from "../../types"
+import PokemonListItem from "../PokemonListItem"
+import style from "./style"
 
 function PokemonList({ pokemons }: any) {
   return (
     <>
       {
-        <div>
+        <div style={style}>
           {
             pokemons
               .map(
