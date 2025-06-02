@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import style, { buttonStyle } from "./style"
 
 interface Props {
