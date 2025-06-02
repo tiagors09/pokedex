@@ -1,5 +1,5 @@
 import type { Pokemon } from "../../types";
-import style, { imgStyle } from "./style";
+import style, { imgStyle, figCaptionStyle, anchorStyle } from "./style";
 
 export default function PokemonListItem(
   {
@@ -9,7 +9,7 @@ export default function PokemonListItem(
   }: Pokemon
 ) {
   return (
-    <a href={url}>
+    <a style={anchorStyle} href={url}>
       <div key={crypto.randomUUID()}>
         <figure style={style}>
           <img
@@ -17,7 +17,7 @@ export default function PokemonListItem(
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
             alt={name}
           />
-          <figcaption>{name}</figcaption>
+          <figcaption style={figCaptionStyle}>{name}</figcaption>
         </figure>
       </div >
     </a >

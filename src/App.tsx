@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Pokemon } from './types';
 import PokemonList from "./components/PokemonList";
+import Navigation from "./components/Navigation";
 
 const style: React.CSSProperties = {
   width: '100%',
@@ -16,6 +17,12 @@ const titleStyle: React.CSSProperties = {
   fontSize: 'xx-large',
   padding: '20px',
   margin: '0',
+}
+
+interface Response {
+  pokemons: Pokemon[]
+  next?: string | null | undefined
+  prev?: string | null | undefined
 }
 
 async function fetchPokemons(offset: number = 0, limit: number = 20) {
@@ -34,7 +41,7 @@ async function fetchPokemons(offset: number = 0, limit: number = 20) {
         })
       )
 
-      return pokemons
+      return { pokemons: pokemons, next: data.next, prev: data?.prev }
     } else {
       throw new Error('Erro ao obter os Pokémons');
     }
@@ -44,32 +51,38 @@ async function fetchPokemons(offset: number = 0, limit: number = 20) {
 }
 
 function App() {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([])
+  const [response, setResponse] = useState<Response>({
+    pokemons: [],
+    next: null,
+    prev: null
+  })
+
+  function loadData(offset?: number) {
+    fetchPokemons(offset)
+      .then(
+        data => setResponse(
+          _ => data!
+        )
+      )
+      .catch(
+        error => console.log(error)
+      )
+  }
 
   useEffect(
-    () => {
-      fetchPokemons()
-        .then(
-          data => setPokemons(
-            previusData => previusData = data
-          )
-        )
-        .catch(
-          _ => setPokemons(
-            previusData => previusData = []
-          )
-        )
-    }, []
+    () => loadData(),
+    []
   );
 
   return (
     <div style={style}>
       <h1 style={titleStyle}>Pokedex</h1>
       {
-        pokemons ?
-          <PokemonList pokemons={pokemons} /> :
+        response.pokemons ?
+          <PokemonList pokemons={response.pokemons} /> :
           <div>vazio</div>
       }
+      <Navigation next={response.next} prev={response.prev} handleClick={loadData} />
     </div>
   )
 }

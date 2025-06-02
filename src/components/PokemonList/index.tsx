@@ -11,7 +11,7 @@ function PokemonList({ pokemons }: any) {
             pokemons
               .map(
                 ({ id, name, url }: Pokemon) =>
-                  <PokemonListItem id={id} name={name} url={url} />
+                  <PokemonListItem key={crypto.randomUUID()} id={id} name={name} url={url} />
               )
           }
         </div >
