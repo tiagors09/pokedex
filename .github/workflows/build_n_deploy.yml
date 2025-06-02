@@ -1,4 +1,4 @@
-name: Build & deploy
+name: Build & Deploy
 
 on:
   push:
@@ -14,17 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 20
       
-      - name: Get dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm build
-      
+      - name: Build project
+        run: npm run build
+
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
         with:
@@ -54,4 +54,4 @@ jobs:
           git init
           git add .
           git commit -m "Deploy to GitHub Pages"
-          git push --force "https://${{ secrets.TOKEN }}@github.com:tiagors09/pokedex.git" prod:gh-pages
+          git push --force "https://${{ secrets.TOKEN }}@github.com/tiagors09/pokedex.git" HEAD:gh-pages
