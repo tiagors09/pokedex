@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import style, { buttonStyle, anchorStyle } from "./style"
+import style, { buttonStyle } from "./style"
 
 interface Props {
   prev?: string | null
   next?: string | null
-  handleClick: (offset: number) => void
+  handleClick: Function
 }
 
 function getOffsetFromUrl(url?: string): number | null {
@@ -18,35 +18,23 @@ function Navigation({ prev, next, handleClick }: Props) {
     <div style={style}>
       {
         prev != null &&
-        <div style={buttonStyle} onClick={
-          () => {
-            useEffect(() => {
-              handleClick(
-                getOffsetFromUrl(prev)!
-              )
-            })
-          }
+        <button style={buttonStyle} onClick={
+          () => handleClick(getOffsetFromUrl(prev))
         }>
 
           Prev
 
-        </div>
+        </button>
       }
       {
         next != null &&
-        <div style={buttonStyle} onClick={
-          () => {
-            useEffect(() => {
-              handleClick(
-                getOffsetFromUrl(next)!
-              )
-            })
-          }
+        <button style={buttonStyle} onClick={
+          () => handleClick(getOffsetFromUrl(next))
         }>
           Next
-        </div>
+        </button>
       }
-    </div>
+    </div >
   )
 }
 

@@ -25,10 +25,11 @@ interface Response {
   prev?: string | null | undefined
 }
 
-async function fetchPokemons(offset: number = 0, limit: number = 20) {
+async function fetchPokemons(offset: number = 0) {
+  console.log(offset)
   try {
     const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
+      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
     )
 
     if (response.status >= 200 && response.status <= 208 && response.ok) {
@@ -41,7 +42,9 @@ async function fetchPokemons(offset: number = 0, limit: number = 20) {
         })
       )
 
-      return { pokemons: pokemons, next: data.next, prev: data?.prev }
+      console.log({ pokemons: pokemons, next: data.next, prev: data.previous })
+
+      return { pokemons: pokemons, next: data.next, prev: data.previous }
     } else {
       throw new Error('Erro ao obter os Pokémons');
     }
@@ -57,7 +60,7 @@ function App() {
     prev: null
   })
 
-  function loadData(offset?: number) {
+  function loadData(offset?: number): void {
     fetchPokemons(offset)
       .then(
         data => setResponse(

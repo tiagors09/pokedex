@@ -8,7 +8,11 @@ const style: React.CSSProperties = {
 
 export const buttonStyle: React.CSSProperties = {
   backgroundColor: 'rgb(172, 51, 51)',
-  borderRadius: '15%',
+  borderRadius: '5%',
+  border: 'none',
+  color: 'white',
+  padding: '10px',
+  fontSize: '20px',
 }
 
 export const anchorStyle: React.CSSProperties = {
