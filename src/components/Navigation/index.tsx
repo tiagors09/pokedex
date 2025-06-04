@@ -1,10 +1,6 @@
+import { useContext } from "react";
 import style, { buttonStyle } from "./style"
-
-interface Props {
-  prev?: string | null
-  next?: string | null
-  handleClick: Function
-}
+import { PokemonContext } from "../PokemonContextProvider";
 
 function getOffsetFromUrl(url?: string): number | null {
   if (!url) return null;
@@ -12,13 +8,15 @@ function getOffsetFromUrl(url?: string): number | null {
   return match ? parseInt(match[1], 10) : null;
 }
 
-function Navigation({ prev, next, handleClick }: Props) {
+function Navigation(_: any) {
+  const { next, prev, loadData } = useContext(PokemonContext)
+
   return (
     <div style={style}>
       {
         prev != null &&
         <button style={buttonStyle} onClick={
-          () => handleClick(getOffsetFromUrl(prev))
+          () => loadData(getOffsetFromUrl(prev)!)
         }>
 
           Prev
@@ -28,7 +26,7 @@ function Navigation({ prev, next, handleClick }: Props) {
       {
         next != null &&
         <button style={buttonStyle} onClick={
-          () => handleClick(getOffsetFromUrl(next))
+          () => loadData(getOffsetFromUrl(next)!)
         }>
           Next
         </button>
